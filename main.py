@@ -10,8 +10,10 @@ import google.api_core
 import curses
 import sys
 
+debug_file = open("debug.log", "a")
 log_file = open("output.log", "a")
 sys.stdout = log_file
+sys.stderr = debug_file
 
 responses = []
 context = [
