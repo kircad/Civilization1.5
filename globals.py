@@ -35,3 +35,5 @@ Each | (CHARACTER) | cell represents a 1x1 tile on the map, with (CHARACTER) cor
 """
 
 maxTurns = 10
+
+#TODO REPLACE WITH GAME CLASS - SYSTEM INFO, SCREEN INFO, CIV COLORS, TRAITS, UNIT ID TRACKER, TURN TRACKER, ETC.

@@ -1,11 +1,11 @@
-def make_request(context, map, cities, units):
+def make_request(context, map, units, cities):
     request = context[0]['content']
     request += (map.print_map_opponent())
     request += "BELOW ARE YOUR UNITS AND THEIR COORDINATES (0-INDEXED IN FORMAT (ROW, COLUMN))"
-    for unit in units:
+    for name, unit in units.items():
         request+=("UNIT: " + unit.name)
         request+=(" LOCATION: (" + str(unit.coordinates[0]) + "," + str(unit.coordinates[1]) + ")")
-    for city in cities:
+    for name, city in cities.items():
         request+=("UNIT: " + city.name)
         request+=(" LOCATION: (" + str(city.coordinates[0]) + "," + str(city.coordinates[1]) + ")")
     return request

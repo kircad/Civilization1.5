@@ -20,14 +20,17 @@ context = [
 {"role": "system", "content": init_prompt }
 ]
 
+def addUnit(unit, civ, map):
+    civ.units[unit.name] = unit # TODO HANDLE MULTIPLE UNITS OF SAME TYPE
+
 def main(stdscr):
     # Initializing game
     player_civ = Civ("player")
     ai_civ = Civ("opponent")
-    player_civ.units.append(Unit('warrior', 'player', [0, 0]))
-    ai_civ.units.append(Unit('warrior', 'opponent', [9, 9]))
     terrainMap = Map(10, 10)
     terrainMap.generate_terrain("preset")
+    addUnit(Unit('warrior', 0, 'player', [0, 0]), player_civ, terrainMap)
+    addUnit(Unit('warrior', 1, 'opponent', [9, 9]), ai_civ, terrainMap)
 
     #Initializing model
     GOOGLE_API_KEY='AIzaSyD3CTe6s7RIWeQKVfrUaaGVEkteYOa7eKU'
@@ -45,10 +48,10 @@ def main(stdscr):
     while currTurn < maxTurns:
         stdscr.clear()
         stdscr.addstr("YEAR " + str(currTurn) + "\n")
-        terrainMap.print_map_player(stdscr, player_civ.units, player_civ.cities)
+        terrainMap.print_map_player(stdscr)
         print("PLAYER MOVE")
         stdscr.refresh()
-        for unit in player_civ.units:
+        for name, unit in player_civ.units.items():
             key = stdscr.getch()
             if (key == ord('w')): # TODO BOUND CHECKING
                 unit.coordinates[1] -= 1
