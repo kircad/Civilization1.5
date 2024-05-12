@@ -20,9 +20,8 @@ Your output should be in the form of a .json file with the following fields:
     - For each UNIT, list the UNIT NAME and the chosen move
 - CityMoves:
     - For each CITY, list the CITY NAME and the chosen move
-
-Make sure the output is FULLY JSONIFIED and ready to be used by game logic.
-Before you provide the JSON output, briefly explain your reasoning 
+- Logic: briefly explain your reasoning 
+Make sure the output is FULLY JSONIFIED and ready to be used by game logic. Do NOT return anything not in JSON format
 
 ---- THE INITIAL GAME MAP WILL BE GIVEN TO YOU BELOW THIS LINE ----
 
@@ -34,6 +33,6 @@ Each | (CHARACTER) | cell represents a 1x1 tile on the map, with (CHARACTER) cor
 - '\n' represents a new row
 """
 
-maxTurns = 10
+maxTurns = 100
 
 #TODO REPLACE WITH GAME CLASS - SYSTEM INFO, SCREEN INFO, CIV COLORS, TRAITS, UNIT ID TRACKER, TURN TRACKER, ETC.

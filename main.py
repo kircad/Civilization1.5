@@ -20,22 +20,21 @@ context = [
 {"role": "system", "content": init_prompt }
 ]
 
-def addUnit(unit, civ, map):
-    civ.units[unit.name] = unit # TODO HANDLE MULTIPLE UNITS OF SAME TYPE
-
 def main(stdscr):
     # Initializing game
+    cities = []
+    units = []
     player_civ = Civ("player")
     ai_civ = Civ("opponent")
     terrainMap = Map(10, 10)
     terrainMap.generate_terrain("preset")
-    addUnit(Unit('warrior', 0, 'player', [0, 0]), player_civ, terrainMap)
-    addUnit(Unit('warrior', 1, 'opponent', [9, 9]), ai_civ, terrainMap)
+    units.append(Unit('warrior', 0, 'player', [0, 0]))
+    units.append(Unit('warrior', 1, 'opponent', [9, 9]))
 
     #Initializing model
     GOOGLE_API_KEY='AIzaSyD3CTe6s7RIWeQKVfrUaaGVEkteYOa7eKU'
     genai.configure(api_key=GOOGLE_API_KEY)
-    model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+    model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest") #TODO TRY 1.0?
     currTurn = 1
 
     curses.curs_set(0)  # Hide cursor
@@ -48,29 +47,32 @@ def main(stdscr):
     while currTurn < maxTurns:
         stdscr.clear()
         stdscr.addstr("YEAR " + str(currTurn) + "\n")
-        terrainMap.print_map_player(stdscr)
-        print("PLAYER MOVE")
+        terrainMap.print_map_player(stdscr, units, cities)
         stdscr.refresh()
-        for name, unit in player_civ.units.items():
-            key = stdscr.getch()
-            if (key == ord('w')): # TODO BOUND CHECKING
-                unit.coordinates[1] -= 1
-            if (key == ord('s')):
-                unit.coordinates[1] += 1
-            if (key == ord('d')):
-                unit.coordinates[0] += 1
-            if (key == ord('a')):
-                unit.coordinates[0] -= 1
-            else:
-                continue #TODO INVALID INPUT THING
-        for city in player_civ.cities:
+        for unit in units:
+            if (unit.civ == "player"):
+                key = stdscr.getch()
+                if (key == ord('w')): # TODO BOUND CHECKING
+                    unit.coordinates[1] -= 1
+                if (key == ord('s')):
+                    unit.coordinates[1] += 1
+                if (key == ord('d')):
+                    unit.coordinates[0] += 1
+                if (key == ord('a')):
+                    unit.coordinates[0] -= 1
+                else:
+                    continue #TODO INVALID INPUT THING
+        for city in cities:
             pass
-        request = make_request(context, terrainMap, ai_civ.cities, ai_civ.units)
-        response = get_response(model, request)
-        if response is not None:
-            responses.append(response)
+        request = make_request(context, terrainMap, units, cities)
+        out = get_response(model, request)
+        if out is not None:
+           responses.append(out)
+           json_string = out.strip("'''").replace("json", "").strip()
+           parsed_dict = json.loads(json_string)
+           print(parsed_dict['unitMoves'])
         else:
-            print("Gemini Error!")
+           print("Gemini Error!")
         currTurn += 1
 
 
