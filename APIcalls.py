@@ -4,8 +4,10 @@ def make_request(context, map, units, cities):
     request += "BELOW ARE YOUR UNITS AND THEIR COORDINATES (0-INDEXED IN FORMAT (ROW, COLUMN))"
     for unit in units:
         if unit.civ == "opponent":
-            request+=("UNIT: " + unit.name)
+            request+=("UNIT TYPE: " + unit.name)
+            request+=(" UNIT ID: " + str(unit.id))
             request+=(" LOCATION: (" + str(unit.coordinates[0]) + "," + str(unit.coordinates[1]) + ")")
+    request += "BELOW ARE YOUR CITIES AND THEIR COORDINATES (0-INDEXED IN FORMAT (ROW, COLUMN))"
     for city in cities:
         request+=("UNIT: " + city.name)
         request+=(" LOCATION: (" + str(city.coordinates[0]) + "," + str(city.coordinates[1]) + ")")
