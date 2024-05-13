@@ -21,7 +21,7 @@ class Map:
                     self.grid[y][x] = terrain_type
 
         elif mode == "preset":
-            terrain_layout = [
+            terrain_layout = [ #TODO MAKE BIGGER
                 ['F', 'F', 'F', 'F', 'F', 'F', 'P', 'P', 'P', 'P'],
                 ['F', 'F', 'F', 'F', 'F', 'F', 'F', 'P', 'P', 'P'],
                 ['F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'P', 'P'],
@@ -39,13 +39,16 @@ class Map:
                 for x in range(self.width):
                     self.grid[y][x] = terrain_layout[y][x]
 
-    def print_map_opponent(self):
+    def print_map_opponent(self): #TODO FIND BETTER WAY TO PASS MAP INTO LLM (JSON? FEATURE-BASED?)
         out = ""
+        count = 0
         for row in self.grid:
+            print("ROW " + str(count) + ":")
             out += ' | '.join(row) + '\n'
+            count += 1
         return out
     
-    def print_map_player(self, stdscr, units, cities): #TODO add knowntiles mechanic
+    def print_map_player(self, stdscr, units, cities): #TODO add knowntiles mechanic TODO FIX COLORS NOT SHOWING UP ACCORDING TO UNIT CIV
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)  # Dark green (F) (PLAYER UNITS)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLUE)   # Blue (R)
         curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_YELLOW)  # Yellow (P)

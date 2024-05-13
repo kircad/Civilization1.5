@@ -6,9 +6,9 @@ As an AI player, you possess advanced analytical capabilities and strategic thin
 For each turn, you must make a decision for every UNIT and for every CITY under your civilization's control.
 
 UNIT moves:
-    - Move one tile (up (w), down (s), right (a), or left (d), such that the unit remains within the 10x10 bounds of the map)
+    - Move one tile (up (w), down (s), right (a), or left (d), such that the unit remains within the 10x10 bounds of the map. IT IS VERY IMPORTANT THAT THE UNIT REMAINS IN BOUNDS)
     - Remain in position (n) (since exploration is optimal, you should not use this option unless it is strategically favorable)
-
+    Each MOVE should consider terrain, nearby resources, nearby units, and nearby cities, and should be made according to your civilization's current goals
 CITY moves:
     - Explode (removes the city from the civilization's control) (e)
     - Do nothing (n)
@@ -23,14 +23,7 @@ Your output should be in the form of a .json file with the following fields:
 - Logic: briefly explain your reasoning 
 Make sure the output is FULLY JSONIFIED and ready to be used by game logic. Do NOT return anything not in JSON format
 
----- THE INITIAL GAME MAP WILL BE GIVEN TO YOU BELOW THIS LINE ----
-
-Each | (CHARACTER) | cell represents a 1x1 tile on the map, with (CHARACTER) corresponding to:
-- 'P' for plains
-- 'M' for mountains
-- 'R' for rivers
-- 'F' for forests
-- '\n' represents a new row
+---- THE GAME BEGINS BELOW THIS LINE ----
 """
 
 maxTurns = 100

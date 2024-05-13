@@ -64,23 +64,23 @@ def main(stdscr):
                     continue #TODO INVALID INPUT THING
         for city in cities:
             pass
-        request = make_request(context, terrainMap, units, cities)
+        request = make_request(context, terrainMap, units, cities, currTurn)
         out = get_response(model, request)
         if out is not None:
            json_string = out.strip("```")[4:]
            parsed_dict = json.loads(json_string)
+           print(json_string)
            responses.append(parsed_dict)
            for unit in parsed_dict['UnitMoves']:
                 move = unit['MOVE']
                 unit = units[unit['UNIT_ID']]
-                key = stdscr.getch()
-                if (move == ord('w')): # TODO BOUND CHECKING
+                if (move == ('w')): # TODO BOUND CHECKING
                     unit.coordinates[1] -= 1
-                if (move == ord('s')):
+                if (move == ('s')):
                     unit.coordinates[1] += 1
-                if (move == ord('d')):
+                if (move == ('d')):
                     unit.coordinates[0] += 1
-                if (move == ord('a')):
+                if (move == ('a')):
                     unit.coordinates[0] -= 1
                 else:
                     continue #TODO INVALID INPUT THING
